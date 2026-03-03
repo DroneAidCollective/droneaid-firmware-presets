@@ -198,6 +198,29 @@ profile 0
         set vtx_channel = 1
     #$ OPTION END
 
+
+    #$ OPTION BEGIN (UNCHECKED): SKYZONE VT1225 1.2G 2.5W
+        vtxtable bands 2
+        vtxtable channels 8
+
+        vtxtable band 1 SKYZONEA A CUSTOM  1080 1120 1160 1200 1240 1280 1320 1360
+        vtxtable band 2 SKYZONEB B CUSTOM   960  980 1000 1020 1040 1258 1380 1400
+
+        vtxtable powerlevels 4
+        vtxtable powervalues 1 2 3 4
+        vtxtable powerlabels 25 800 HIG MAX    
+
+        # vtx
+        vtx 0 2 0 0 1 900 1100
+        vtx 1 2 0 0 2 1400 1600
+        vtx 2 2 0 0 5 1900 2100
+
+        # default frequency A1
+        set vtx_band = 1
+        set vtx_freq = 1360
+        set vtx_channel = 8
+    #$ OPTION END
+
     #$ OPTION BEGIN (UNCHECKED): Foxeer Reaper 2.5W
         # IRC Tramp Control Port
         serial 0 8192 115200 57600 0 115200
