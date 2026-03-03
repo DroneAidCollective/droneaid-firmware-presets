@@ -1,16 +1,12 @@
 #$ TITLE: DroneAid 7", 8", 10"
-#$ FIRMWARE_VERSION: 4.5
+#$ FIRMWARE_VERSION: 2025.12
 #$ CATEGORY: BNF
 #$ STATUS: EXPERIMENTAL
 #$ KEYWORDS: DroneAid, Slava Ukraini
 #$ AUTHOR: Vladyslav, Yevhen, Dmytro
 #$ PARSER: MARKED
-#$ DESCRIPTION: Configuration of the drones of DroneAid (suitable for February 2026)
+#$ DESCRIPTION: Configuration of the drones of DroneAid
 #$ FORCE_OPTIONS_REVIEW: TRUE
-
-# version
-# Betaflight / STM32F405 (S405) 4.5.0 Apr 28 2024 / 12:25:20 (c155f5830) MSP API: 1.46
-# config rev: 3068e6e
 
 # name: DroneAid_NL
 
@@ -92,11 +88,10 @@ profile 0
 #$ OPTION_GROUP END
 
 #$ OPTION_GROUP BEGIN: VTX (select one)
-   
-    #$ OPTION BEGIN (CHECKED): Pilotix 5.8GHz 3W
+
+   #$ OPTION BEGIN (CHECKED): Pilotix 5.8GHz 3W
         # TBS Smart Audio Control Port
-        serial 0 2048 115200 57600 0 115200
-        serial 2 2048 115200 57600 0 115200 # moonshine fc related vtx serial port
+        serial 3 2048 115200 57600 0 115200
 
         vtxtable bands 6
         vtxtable channels 8
@@ -122,7 +117,34 @@ profile 0
         set vtx_channel = 8
     #$ OPTION END
 
- #$ OPTION BEGIN (UNCHECKED): Rush Solo Max
+    #$ OPTION BEGIN (UNCHECKED): Pilotix VTX R3000 4.9-6.2G 3W
+        vtxtable bands 8
+        vtxtable channels 8
+        vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
+        vtxtable band 2 BOSCAM_B B FACTORY 5733 5752 5771 5790 5809 5828 5847 5866
+        vtxtable band 3 BOSCAM_E E FACTORY 5705 5685 5665 5645 5885 5905 5925 5945
+        vtxtable band 4 FATSHARK F FACTORY 5740 5760 5780 5800 5820 5840 5860 5880
+        vtxtable band 5 RACEBAND R FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
+        vtxtable band 6 LOWRACE  L FACTORY 5362 5399 5436 5473 5510 5547 5584 5621
+        vtxtable band 7 X        X FACTORY 4990 5020 5050 5080 5110 5140 5170 5200
+        vtxtable band 8 Y        Y FACTORY    2   28   54   80  106  132  158  184
+
+        vtxtable powerlevels 4
+        vtxtable powervalues 0 1 2 3
+        vtxtable powerlabels 25 1W 2W 3W
+
+        # vtx
+        vtx 0 2 0 0 1 900 1100
+        vtx 1 2 0 0 2 1400 1600
+        vtx 2 2 0 0 5 1900 2100
+
+        # default frequency R8
+        set vtx_freq = 5917
+        set vtx_band = 5
+        set vtx_channel = 8
+    #$ OPTION END
+
+    #$ OPTION BEGIN (UNCHECKED): Rush Solo Max
         # TBS Smart Audio Control Port
         serial 0 2048 115200 57600 0 115200
         serial 2 2048 115200 57600 0 115200 # moonshine fc related vtx serial port
@@ -285,8 +307,8 @@ profile 0
         set osd_log_status_pos = 2369
         set osd_camera_frame_pos = 99
         set osd_stat_bitmask = 14254
-        set osd_canvas_width = 30
-        set osd_canvas_height = 16
+        set osd_camera_frame_width = 30
+        set osd_camera_frame_height = 16
     #$ OPTION END
 
     #$ OPTION BEGIN (UNCHECKED): NTSC (select if OSD blinking or out of borders)
@@ -322,7 +344,6 @@ profile 0
 #$ OPTION_GROUP END
 
 #$ OPTION_GROUP BEGIN: Flight controller (select one)
-
     #$ OPTION BEGIN (CHECKED): Pilotix AOCODARCF405V3
         manufacturer_id SJET
         mcu_id 002d00363233511436313533
@@ -331,10 +352,9 @@ profile 0
         set acc_calibration = -24,23,20,1
 
         # Ports (UARTS)
-        serial 3 2048 115200 57600 0 115200
-    #$ OPTION END
 
-#$ OPTION BEGIN (UNCHECKED): SpeedyBee F405 V4
+    #$ OPTION END
+    #$ OPTION BEGIN (UNCHECKED): SpeedyBee F405 V4
         manufacturer_id SPBE
         mcu_id 003e00333133471533353636
         signature
@@ -359,6 +379,17 @@ profile 0
         serial 1 0 115200 57600 0 115200
         serial 2 0 115200 57600 0 115200 # moonshine fc related vtx serial reset
         serial 5 64 115200 57600 0 115200
+    #$ OPTION END
+
+    #$ OPTION BEGIN (UNCHECKED): Pilotix 3W
+        manufacturer_id SJET
+        mcu_id 002d00363233511436313533
+        signature
+        board_name AOCODARCF405V3
+        set acc_calibration = -24,23,20,1
+
+        # Ports (UARTS)
+        serial 3 2048 115200 57600 0 115200
     #$ OPTION END
 
     #$ OPTION BEGIN (UNCHECKED): Moonshine HGLRCF405 V2 (Experimental)
@@ -431,14 +462,12 @@ profile 0
         set rc_smoothing_auto_factor = 250
         set rc_smoothing_auto_factor_throttle = 100
         set rc_smoothing_setpoint_cutoff = 6
-        set rc_smoothing_feedforward_cutoff = 6
         set rc_smoothing_throttle_cutoff = 20
         set dshot_bidir = ON
         set motor_pwm_protocol = DSHOT300
         set yaw_motors_reversed = ON
         set small_angle = 180
         set simplified_gyro_filter_multiplier = 80
-        set debug_mode = GYRO_SCALED
         set rpm_filter_min_hz = 80
     #$ OPTION END
 
